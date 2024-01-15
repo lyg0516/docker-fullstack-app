@@ -15,9 +15,23 @@ after_success:
   - docker build -t leeyeonggeun/docker-frontend ./frontend
   - docker build -t leeyeonggeun/docker-backend ./backend
   - docker build -t leeyeonggeun/docker-nginx ./nginx
+  - docker build -t leeyeonggeun/docker-mysql ./mysql
 
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
 
   - docker push leeyeonggeun/docker-frontend
   - docker push leeyeonggeun/docker-backend
   - docker push leeyeonggeun/docker-nginx
+  - docker push leeyeonggeun/docker-mysql
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-northeast-2"
+  app: "docker-app"
+  env: "Docker-app-env"
+  bucket_name: elasticbeanstalk-ap-northeast-2-439687180680
+  bucket_path: "docker-app"
+  on: 
+    branch: master
+  
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
