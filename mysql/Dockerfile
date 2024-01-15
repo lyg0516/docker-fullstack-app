@@ -1,2 +1,3 @@
 FROM mysql:latest
-ADD ./my.cnf /etc/myql/conf.d/my.cnf
+
+ADD ./my.cnf /etc/mysql/conf.d/my.cnf
